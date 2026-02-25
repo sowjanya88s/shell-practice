@@ -9,8 +9,8 @@ echo " pls run this with root user privileges"
 exit 1
 fi
 
-dnf install nginx -y
-if [ $? -ne 0 ]; then
+sudo dnf install nginx -y
+if [ $? -ne 1 ]; then
 echo "mysql installation ... success"
 exit 1
 else
