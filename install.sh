@@ -3,12 +3,14 @@
 user_id=$(id -u)
 echo "user id is: $user_id"
 
-if [ $user_id != 0 ]
+if [ $user_id -ne 0 ]
 then
 echo " pls run this with root user privileges"
+exit 1
+fi
+
 dnf install mysql -y
-if [ $? != 0 ];
-then
+if [ $? -ne 0 ]; then
 echo "mysql installation ... success"
 exit 1
 else
