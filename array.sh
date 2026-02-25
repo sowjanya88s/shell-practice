@@ -1,6 +1,6 @@
 #!/bin/bash
 
 fruits=("apple" "banana" "pomo")
-echo "fruits in the array are: $#"
+echo "fruits in the array are: ${fruits[@]}"
 echo "first fruit is: ${fruits[0]}"
 echo "first fruit is: ${fruits[1]}"
