@@ -1,4 +1,5 @@
 #!/bin/bash
+
 LOG_DIR=/var/log/shell-script
 LOG_file=/var/log/shell-script/$0.log
 R="\e[31m"
