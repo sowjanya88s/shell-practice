@@ -5,7 +5,7 @@ user_id=$(id -u)
 echo "user id is: $user_id"
 
 if [ $user_id -ne 0 ]; then
-echo " pls run this with root user privileges"
+echo " pls run this with root user privileges" | tee -a $LOG_file
 exit 1
 fi
 
@@ -13,9 +13,9 @@ mkdir -p $LOG_DIR
 
 validate() {
     if [ $1 -eq 0 ] ; then
-    echo "$2 ... success"
+    echo "$2 ... success" | tee -a $LOG_file
 else 
-    echo "$2 ... failure"
+    echo "$2 ... failure" | tee -a $LOG_file
     exit 1
     fi
 }
