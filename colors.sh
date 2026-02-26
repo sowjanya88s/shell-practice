@@ -29,7 +29,7 @@ for package in $@
 do
     yum list installed | grep $package &>> $LOG_file
     if [ $? -ne 1 ] ; then
-    echo " $Y $package is already installed $N " 
+    echo "  $package is already installed ... $Y skipping $N " 
     else
     yum install $package -y &>> $LOG_file
     validate "$?" "installation of $package"
