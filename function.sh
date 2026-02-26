@@ -20,7 +20,7 @@ else
 sudo dnf install nginx -y
 validate "$?" "installing nginx"
 
-sudo dnf install mysql-server -y
+sudo dnf install git -y
 validate "$?" "installing mysql"
 
 sudo dnf install vsftpd -y
