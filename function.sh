@@ -8,10 +8,13 @@ echo " pls run this with root user privileges"
 exit 1
 fi
 
-validate ( $1 -eq 0 ) {
+validate() {
+    if [ $1 -eq 0 ] ; then
     echo "$2 ... success"
 else 
     echo "$2 ... failure"
+    exit 1
+    fi
 }
 
 sudo dnf install nginx -y
