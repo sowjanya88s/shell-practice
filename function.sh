@@ -15,10 +15,10 @@ else
 }
 
 sudo dnf install nginx -y
-validate $? "installing nginx"
+validate "$?" "installing nginx"
 
 sudo dnf install mysql -y
-validate $? "installing mysql"
+validate "$?" "installing mysql"
 
 sudo dnf install vsftpd -y
-validate $? "installing vsftpd"
+validate "$?" "installing vsftpd"
