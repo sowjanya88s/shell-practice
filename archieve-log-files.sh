@@ -11,8 +11,11 @@ echo "pls run the script with root user privileges"
 fi
 
 usage() {
-    echo "pls pass the arguments: <source-dir> <dest-dir> <days>"
+    echo "pls pass the arguments: <source-dir> <dest-dir> <days>" | tee -a $LOGS_FILE
+    exit 1
 }
+
+mkdir $LOGS_DIR
 
 log() {
     echo "$(date "+%Y-%m-%d %H:%M:%S") | $1 "
@@ -20,7 +23,6 @@ log() {
 
 if [ $# -lt 2 ]; then
     usage
-    exit 1
 fi
 
 log "source directory: $source_dir"
@@ -35,17 +37,16 @@ if [ ! -d $dest_dir ]; then
     echo "destination directory $dest_dir does not exists"
 fi
 
-files_to_delete=$(find $source_dir -name "*.log" -type f -mtime +14)
-if [ -z $files_to_delete ]; then
+files=$(find "$source_dir" -name "*.log" -type f -mtime +$days)
+if [ -z "$files_to_delete" ]; then
     echo "there are no files to archieve"
 else
-    while IFS= read -r line ; do
-        echo "files to archieve: $line"
+        echo "files to archieve: $files"
         timestamp=$(date +%F-%H-%M-%S)
-        Archive_name=$dest_dir/$timestamp.tar.gz
-        tar -xzvf $Archive_name $(find $source_dir -name "*.log" -type f -mtime +14)
+        Archive_name="$dest_dir/app-logs-$timestamp.tar.gz"
+        tar -zcvf $Archive_name $(find $source_dir -name "*.log" -type f -mtime +$days)
     done <<< $files_to_delete
-fi
+
 
 if [ ! -f $Archive_name ]; then
     log "archival of file...failed"
@@ -54,7 +55,9 @@ else
         echo "files to delete: $line"
         rm -f $line
         echo "$line deleted"
-    done <<< $files_to_delete
+    done <<< $files
+fi
+
 fi
 
 
