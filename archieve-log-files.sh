@@ -14,7 +14,7 @@ usage() {
     echo "pls pass the arguments: <source-dir> <dest-dir> <days>(default 14 days)" | tee -a $LOGS_FILE
     exit 1
 }
-mkdir -p $LOGS_FILE
+mkdir -p $LOGS_DIR
 
 log() {
     echo "$(date "+%Y-%m-%d %H:%M:%S") | $1 "
