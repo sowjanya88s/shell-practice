@@ -6,6 +6,8 @@ source_dir=$1
 dest_dir=$2
 days=${3:-14}
 
+mkdir -p $LOGS_DIR
+
 if [ $id -ne 0 ]; then
 echo "pls run the script with root user privileges"
 fi
@@ -14,10 +16,9 @@ usage() {
     echo "pls pass the arguments: <source-dir> <dest-dir> <days>(default 14 days)" | tee -a "$LOGS_FILE"
     exit 1
 }
-mkdir -p $LOGS_DIR
 
 log() {
-    echo "$(date "+%Y-%m-%d %H:%M:%S") | $1 "
+    echo "$(date "+%Y-%m-%d %H:%M:%S") | $1 " | tee -a "$LOGS_FILE"
 }
 
 if [ $# -lt 2 ]; then
