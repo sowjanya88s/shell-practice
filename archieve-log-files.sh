@@ -1,6 +1,6 @@
 #!/bin/bash
 LOGS_DIR=/home/ec2-user/app-logs
-LOGS_FILE=$LOGS_DIR/$0.log
+LOGS_FILE=$LOGS_DIR/archieve-log-files.log
 id=$(id -u)
 source_dir=$1
 dest_dir=$2
@@ -41,14 +41,14 @@ files=$(find "$source_dir" -name "*.log" -type f -mtime +$days)
 if [ -z "$files" ]; then
     echo "there are no files to archieve"
 else
-        echo "files to archieve: $files"
-        timestamp=$(date +%F-%H-%M-%S)
-        Archive_name="$dest_dir/app-logs-$timestamp.tar.gz"
-        tar -zcvf $Archive_name $(find $source_dir -name "*.log" -type f -mtime +$days)
+    echo "files to archieve: $files"
+    timestamp=$(date +%F-%H-%M-%S)
+    Archive_name="$dest_dir/app-logs-$timestamp.tar.gz"
+    tar -zcvf $Archive_name $(find $source_dir -name "*.log" -type f -mtime +$days)
     
 
 
-if [ ! -f $Archive_name ]; then
+if [ ! -f "$Archive_name" ]; then
     log "archival of file...failed"
 else
     while IFS= read -r line ; do
