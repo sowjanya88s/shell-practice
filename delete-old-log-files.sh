@@ -15,7 +15,7 @@ fi
 
 
 Files=$(find $LOGS_DIR -name "*.log" -type f -mtime +14)
-if [ -z $Files ]; then
+if [ -z "$Files" ]; then
    echo " files older than 14 days does not exists"
    else
     while read -r line; do
