@@ -11,7 +11,7 @@ echo "pls run the script with root user privileges"
 fi
 
 usage() {
-    echo "pls pass the arguments: <source-dir> <dest-dir> <days>(default 14 days)" | tee -a $LOGS_FILE
+    echo "pls pass the arguments: <source-dir> <dest-dir> <days>(default 14 days)" | tee -a "$LOGS_FILE"
     exit 1
 }
 mkdir -p $LOGS_DIR
@@ -29,11 +29,13 @@ log "destination directory: $dest_dir"
 log "no.of days: $days"
 
 if [ ! -d "$source_dir" ]; then
-    echo "source directory $source_dir does not exists"
+    echo "source directory $source_dir does not exists" | tee -a "$LOGS_FILE"
+    exit 1
 fi
 
 if [ ! -d "$dest_dir" ]; then
-    echo "destination directory $dest_dir does not exists"
+    echo "destination directory $dest_dir does not exists" | tee -a "$LOGS_FILE"
+    exit 1
 fi
 
 files=$(find "$source_dir" -name "*.log" -type f -mtime +$days)
