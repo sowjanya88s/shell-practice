@@ -1,6 +1,6 @@
 #!/bin/bash
-LOGS_DIR=/home/ec2-user/app-logs
-LOGS_FILE=$LOGS_DIR/archieve-log-files.log
+LOGS_DIR="/opt/app-logs"
+LOGS_FILE="$LOGS_DIR/archieve-log-files.log"
 id=$(id -u)
 source_dir=$1
 dest_dir=$2
@@ -11,10 +11,10 @@ echo "pls run the script with root user privileges"
 fi
 
 usage() {
-    echo "pls pass the arguments: <source-dir> <dest-dir> <days>" | tee -a $LOGS_FILE
+    echo "pls pass the arguments: <source-dir> <dest-dir> <days>(default 14 days)" | tee -a $LOGS_FILE
     exit 1
 }
-
+mkdir -p $LOGS_FILE
 
 log() {
     echo "$(date "+%Y-%m-%d %H:%M:%S") | $1 "
@@ -28,11 +28,11 @@ log "source directory: $source_dir"
 log "destination directory: $dest_dir"
 log "no.of days: $days"
 
-if [ ! -d $source_dir ]; then
+if [ ! -d "$source_dir" ]; then
     echo "source directory $source_dir does not exists"
 fi
 
-if [ ! -d $dest_dir ]; then
+if [ ! -d "$dest_dir" ]; then
     echo "destination directory $dest_dir does not exists"
 fi
 
@@ -43,17 +43,19 @@ else
     echo "files to archieve: $files"
     timestamp=$(date +%F-%H-%M-%S)
     Archive_name="$dest_dir/app-logs-$timestamp.tar.gz"
+    log "Archive name: $Archive_name"
     tar -zcvf $Archive_name $(find $source_dir -name "*.log" -type f -mtime +$days)
     
 
 
 if [ ! -f "$Archive_name" ]; then
     log "archival of file...failed"
+    exit 1
 else
-    while IFS= read -r line ; do
-        echo "files to delete: $line"
+    while IFS= read -r line; do
+        log "files to delete: $line"
         rm -f $line
-        echo "$line deleted"
+        log "$line deleted"
     done <<< $files
 fi
 
