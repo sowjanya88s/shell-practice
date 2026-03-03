@@ -38,7 +38,7 @@ if [ ! -d $dest_dir ]; then
 fi
 
 files=$(find "$source_dir" -name "*.log" -type f -mtime +$days)
-if [ -z "$files_to_delete" ]; then
+if [ -z "$files" ]; then
     echo "there are no files to archieve"
 else
         echo "files to archieve: $files"
