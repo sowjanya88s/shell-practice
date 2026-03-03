@@ -13,7 +13,7 @@ echo "$source_dir does not exists"
 else
 Files=$(find $source_dir -name "*.log" -type f -mtime +14)
     while read -r line; do
-        echo "files to be deleted: $Files"
+        echo "files to be deleted: $line"
     done <<< "$Files"
  fi
 
