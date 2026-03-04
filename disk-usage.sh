@@ -2,6 +2,7 @@
 LOGS_DIR="/opt/apps-dir"
 LOGS_FILE="$LOGS_DIR/$0.sh"
 message=""
+private_ip=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
 
 log() {
     echo  -e "$(date "+%Y-%m-%d %H:%M:%S") |  $1"
@@ -19,3 +20,6 @@ usage_Threshold=3
     
 done <<< "$Disk_usage"
 log "$message"
+
+sh mail.sh "jsowjanya543@gmail.com" "High Disk Usage Alert on $private_ip" "$message" "HIGH_DISK_USAGE" "$private_ip" "DevOps Team"
+
